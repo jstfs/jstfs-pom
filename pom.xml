@@ -153,6 +153,14 @@
 							</manifestEntries>
 						</archive>
 					</configuration>
+					<executions>
+						<execution>
+							<phase>package</phase>	<!-- test-jar默认也是绑定在package阶段 -->
+							<goals>
+								<goal>test-jar</goal>	<!-- 该目标可以将测试代码打成jar包,也作为构件供其他构件重用该测试代码 -->
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
