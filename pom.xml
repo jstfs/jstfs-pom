@@ -12,6 +12,7 @@
 		<build.finalName>${project.artifactId}</build.finalName>
 		<svn.release.user>svn_release</svn.release.user>
 		<svn.release.pwd>svn_release</svn.release.pwd>
+		<spring.version>4.3.23.RELEASE</spring.version>
 	</properties>
 
 	<!-- SVN Server Config -->
@@ -92,10 +93,25 @@
 				<artifactId>jdom</artifactId>
 				<version>2.0.2</version>
 			</dependency>
+			
+			<!-- Spring start -->
 			<dependency>
     			<groupId>org.springframework</groupId>
     			<artifactId>spring-core</artifactId>
-    			<version>4.3.23.RELEASE</version>
+    			<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-context</artifactId>
+			    <version>${spring.version}</version>
+			</dependency>
+			
+			<!-- Spring end -->
+			
+			<dependency>
+    			<groupId>commons-logging</groupId>
+    			<artifactId>commons-logging</artifactId>
+    			<version>1.2</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
