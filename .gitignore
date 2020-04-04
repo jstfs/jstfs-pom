@@ -25,3 +25,5 @@ hs_err_pid*
 #jstfs
 target/
 .settings/
+.classpath
+.project
