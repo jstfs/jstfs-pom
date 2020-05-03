@@ -136,6 +136,12 @@
 			<!-- Spring end -->
 			
 			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>8.0.20</version>
+			</dependency>
+			
+			<dependency>
     			<groupId>commons-logging</groupId>
     			<artifactId>commons-logging</artifactId>
     			<version>1.2</version>
@@ -186,6 +192,45 @@
 		
 		<pluginManagement>
 			<plugins>
+				<!-- jetty-maven-plugin插件是非Apache和Codehaus的插件 -->
+				<!-- jetty插件原本是由如下groupId来提供,最后的版本是:8.1.16.v20140903,时间为2014-09月 -->
+				<!-- 之后由eclipse所属公司来维护,如果使用JDK1.8,那么则需要使用eclipse维护的高版本jetty插件,比如下面的:9.4.6.v20170531 -->
+				<!-- 
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>8.1.16.v20140903</version>
+				</plugin> 
+				 -->
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>9.4.6.v20170531</version>
+					<configuration>
+						<!-- 
+						<reload>manual</reload>
+						 -->
+						<scanIntervalSeconds>5</scanIntervalSeconds>
+						<httpConnector>
+                        	<port>8082</port>
+                    	</httpConnector>
+						<webAppConfig>
+							<contextPath>/${project.artifactId}</contextPath>
+						</webAppConfig>
+						<requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
+							<filename>D:/jetty_log/access-yyyy_mm_dd.log</filename>
+							<filenameDateFormat>yyyy_MM_dd</filenameDateFormat>
+							<logDateFormat>yyyy-MM-dd HH:mm:ss</logDateFormat>
+							<logTimeZone>GMT+8:00</logTimeZone>
+							<append>true</append>
+							<logServer>true</logServer>
+							<retainDays>7</retainDays>
+							<logCookies>true</logCookies>
+						</requestLog>
+						<dumpOnStart>true</dumpOnStart>
+					</configuration>
+				</plugin>
+			
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -210,16 +255,19 @@
 						</execution>
 					</executions>
 				</plugin>
+				
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<version>3.2.1</version>
 				</plugin>
+				
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>3.1.0</version>
 				</plugin>
+				
 				<!-- 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -230,8 +278,6 @@
 						<password>${svn.release.pwd}</password>
 					</configuration>
 				</plugin>
-				 -->
-				<!-- 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
@@ -242,22 +288,6 @@
 						<useReleaseProfile>false</useReleaseProfile>
 					</configuration>
 				</plugin>
-				 -->
-				<!-- 
-				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
-					<artifactId>jetty-maven-plugin</artifactId>
-					<version>8.1.9.v20130131</version>
-					<configuration>
-						<scanIntervalSeconds>10</scanIntervalSeconds>
-						<reload>manual</reload>
-						<webAppConfig>
-							<contextPath>/${project.build.finalName}</contextPath>
-						</webAppConfig>
-					</configuration>
-				</plugin>
-				 -->
-				<!-- 
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat6-maven-plugin</artifactId>
@@ -267,8 +297,6 @@
 						<contextReloadable>true</contextReloadable>
 					</configuration>
 				</plugin>
-				 -->
-				<!-- 
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
@@ -278,8 +306,6 @@
 						<contextReloadable>true</contextReloadable>
 					</configuration>
 				</plugin>
-				 -->
-				<!-- 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
